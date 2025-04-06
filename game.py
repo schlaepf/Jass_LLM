@@ -11,6 +11,8 @@ class DifferenzlerGame:
         self.n_rounds = n_rounds
         self.rounds_played = 0
         self.game_id = str(uuid.uuid4())
+        self.played_cards = []
+        self.history = ""
 
     def get_legal_cards(self, hand, leading_suit):
         # trump can always be played; jack suit is the only card that does not have to follow the leading suit
@@ -31,7 +33,8 @@ class DifferenzlerGame:
 
     def collect_guesses(self):
         for player in self.players:
-            player.make_guess()
+            player.make_guess(self)
+            self.history += f"{player.name} guessed {player.guess} points\n"
 
     def determine_trick_winner(self, trick):
         def strength(entry):
@@ -87,15 +90,20 @@ class DifferenzlerGame:
                 if not self.leading_suit:
                     self.leading_suit = card.suit
                 print(f"{player.name} plays {card}")
+                self.history += f"{player.name} plays {card}\n"
                 trick.append((player, card))
 
             winner = self.determine_trick_winner(trick)
             winner.tricks_won.append([card for _, card in trick])
+            self.played_cards.extend(card for _, card in trick)
+            self.played_cards = list(set(self.played_cards))
             print(f"{winner.name} wins the trick: {[c for _, c in trick]}\n\n")
+            self.history += f"{winner.name} wins the trick: {[c for _, c in trick]}\n\n"
             winner_index = player_order.index(winner)
             player_order = player_order[winner_index:] + player_order[:winner_index]
 
         self.score_players()
+        self.history = ""
 
     def score_players(self):
         for player in self.players:
