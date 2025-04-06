@@ -5,7 +5,7 @@ import uuid
 
 
 class DifferenzlerGame:
-    def __init__(self, players, n_rounds=12):
+    def __init__(self, players, n_rounds=1):
         self.players = players
         self.leading_suit = None
         self.n_rounds = n_rounds
