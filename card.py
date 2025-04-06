@@ -75,7 +75,7 @@ class Card:
         self.rank = rank
 
     def __repr__(self):
-        return f"{self.rank.name[0]}-{self.suit.name[0]}"
+        return f"{self.rank.name}-{self.suit.name}"
 
     def __eq__(self, other):
         return self.suit == other.suit and self.rank == other.rank
