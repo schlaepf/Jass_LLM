@@ -1,6 +1,7 @@
 import random
 from card import generate_deck, Suit
 import csv
+import uuid
 
 
 class DifferenzlerGame:
@@ -9,6 +10,7 @@ class DifferenzlerGame:
         self.leading_suit = None
         self.n_rounds = n_rounds
         self.rounds_played = 0
+        self.game_id = str(uuid.uuid4())
 
     def get_legal_cards(self, hand, leading_suit):
         # trump can always be played; jack suit is the only card that does not have to follow the leading suit
@@ -44,19 +46,19 @@ class DifferenzlerGame:
             print(f"\n--- Round {_ + 1} complete ---")
             for player in self.players:
                 print(f"{player.name}: {player.points} points")
+            self.save_stats()
         print(f"\n--- {self.rounds_played} rounds played ---")
 
         print("\n--- Game complete ---")
         for player in self.players:
             print(f"{player.name}: {player.points} points")
-        self.save_stats()
 
     def save_stats(self):
-        # store the stats points of the players after a game to a csv file
-        # csv file has the following structure: player1_name, player1_points, player2_name, player2_points, ..., n_rounds_played
+        # store the stats points of the players after a round to a csv file
+        # csv file has the following structure: game_id, round, player1_name, player1_points, player2_name, player2_points, ...
         with open("game_stats.csv", "a") as csvfile:
             writer = csv.writer(csvfile)
-            row = [self.rounds_played]
+            row = [self.game_id, self.rounds_played]
             for player in self.players:
                 row.append(player.name)
                 row.append(player.points)
