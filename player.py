@@ -38,6 +38,7 @@ class RandomGuesser(Player):
 
 class HumanPlayer(Player):
     def make_guess(self):
+        print(f"\nYour hand: {', '.join(str(c) for c in self.hand)}")
         while True:
             try:
                 guess = int(input(f"{self.name}, guess your total points: "))
