@@ -11,7 +11,7 @@ def main():
         LLMPlayer("Anthropic", anthropic_llm),
         RandomGuesser("RandomBot"),
     ]
-    game = DifferenzlerGame(players, n_rounds=2)
+    game = DifferenzlerGame(players)
     game.play_game()
 
 

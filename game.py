@@ -4,7 +4,7 @@ import csv
 
 
 class DifferenzlerGame:
-    def __init__(self, players, n_rounds=4):
+    def __init__(self, players, n_rounds=12):
         self.players = players
         self.leading_suit = None
         self.n_rounds = n_rounds
@@ -12,17 +12,15 @@ class DifferenzlerGame:
 
     def get_legal_cards(self, hand, leading_suit):
         # trump can always be played; jack suit is the only card that does not have to follow the leading suit
-        trump_cards = [c for c in hand if c.suit == self.trump_suit]
+        trump_cards = set([c for c in hand if c.suit == self.trump_suit])
+        suit_cards = set([c for c in hand if c.suit == leading_suit])
         if leading_suit is None or (
-            len(trump_cards) == 1 and trump_cards[0].rank == "JACK"
+            len(trump_cards) == 1 and list(trump_cards)[0].rank == "JACK"
         ):
             return hand
-        legal_cards = [
-            c for c in hand if c.suit == leading_suit or c.suit == self.trump_suit
-        ]
-        if len(legal_cards) == 0:
+        if len(suit_cards) == 0:
             return hand
-        return legal_cards
+        return list(suit_cards.union(trump_cards))
 
     def deal_cards(self):
         random.shuffle(self.deck)
@@ -56,7 +54,7 @@ class DifferenzlerGame:
     def save_stats(self):
         # store the stats points of the players after a game to a csv file
         # csv file has the following structure: player1_name, player1_points, player2_name, player2_points, ..., n_rounds_played
-        with open("game_stats.csv", "a", newline="") as csvfile:
+        with open("game_stats.csv", "a") as csvfile:
             writer = csv.writer(csvfile)
             row = [self.rounds_played]
             for player in self.players:
