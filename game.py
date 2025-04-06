@@ -11,12 +11,18 @@ class DifferenzlerGame:
         self.rounds_played = 0
 
     def get_legal_cards(self, hand, leading_suit):
-        if not leading_suit:
+        # trump can always be played; jack suit is the only card that does not have to follow the leading suit
+        trump_cards = [c for c in hand if c.suit == self.trump_suit]
+        if leading_suit is None or (
+            len(trump_cards) == 1 and trump_cards[0].rank == "JACK"
+        ):
             return hand
-        suit_cards = [
+        legal_cards = [
             c for c in hand if c.suit == leading_suit or c.suit == self.trump_suit
         ]
-        return suit_cards if suit_cards else hand
+        if len(legal_cards) == 0:
+            return hand
+        return legal_cards
 
     def deal_cards(self):
         random.shuffle(self.deck)

@@ -101,7 +101,7 @@ def chatgpt_llm(hand, legal_cards, game_state):
         - Total cards: 36 (9 per player)
         - Each round, one suit is randomly selected as the trump suit. Trump cards are stronger than non-trump cards.
         If a suit is trump:
-        - Jack is the strongest card (20 points)
+        - Jack is the strongest card (20 points). This is the only card that does not have to follow suit.
         - 9 is the second strongest card (14 points)
         - Ace is the third strongest card (11 points)
         - King is the fourth strongest card (4 points)
