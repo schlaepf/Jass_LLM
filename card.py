@@ -1,10 +1,12 @@
 from enum import Enum
 
+
 class Suit(Enum):
-    SCHELLEN = 'Schellen'
-    EICHELN = 'Eicheln'
-    SCHILTEN = 'Schilten'
-    ROSEN = 'Rosen'
+    SCHELLEN = "Schellen"
+    EICHELN = "Eicheln"
+    SCHILTEN = "Schilten"
+    ROSEN = "Rosen"
+
 
 class Rank(Enum):
     SIX = 6
@@ -16,6 +18,7 @@ class Rank(Enum):
     QUEEN = 12
     KING = 13
     ACE = 14
+
 
 NON_TRUMP_ORDER = {
     Rank.ACE: 8,
@@ -41,6 +44,31 @@ TRUMP_ORDER = {
     Rank.SIX: 0,
 }
 
+TRUMP_POINTS = {
+    Rank.JACK: 20,
+    Rank.NINE: 14,
+    Rank.ACE: 11,
+    Rank.TEN: 10,
+    Rank.KING: 4,
+    Rank.QUEEN: 3,
+    Rank.EIGHT: 0,
+    Rank.SEVEN: 0,
+    Rank.SIX: 0,
+}
+
+NON_TRUMP_POINTS = {
+    Rank.ACE: 11,
+    Rank.TEN: 10,
+    Rank.KING: 4,
+    Rank.QUEEN: 3,
+    Rank.JACK: 2,
+    Rank.NINE: 0,
+    Rank.EIGHT: 0,
+    Rank.SEVEN: 0,
+    Rank.SIX: 0,
+}
+
+
 class Card:
     def __init__(self, suit: Suit, rank: Rank):
         self.suit = suit
@@ -55,13 +83,21 @@ class Card:
     def __hash__(self):
         return hash((self.suit, self.rank))
 
-    def strength(self, trump_suit: Suit, leading_suit: Suit):
-        if self.suit == trump_suit:
+    def strength(self, trump: Suit, leading: Suit):
+        if self.suit == trump:
             return 100 + TRUMP_ORDER[self.rank]
-        elif self.suit == leading_suit:
+        elif self.suit == leading:
             return 50 + NON_TRUMP_ORDER[self.rank]
         else:
             return NON_TRUMP_ORDER[self.rank]
+
+    def point_value(self, trump: Suit):
+        return (
+            TRUMP_POINTS[self.rank]
+            if self.suit == trump
+            else NON_TRUMP_POINTS[self.rank]
+        )
+
 
 def generate_deck():
     return [Card(suit, rank) for suit in Suit for rank in Rank]

@@ -1,17 +1,17 @@
 from game import DifferenzlerGame
-from player import RandomGuesser, HumanPlayer
+from player import RandomGuesser, HumanPlayer, LLMPlayer, anthropic_llm, chatgpt_llm
+
 
 def main():
     players = [
-        RandomGuesser("RandomBot"),
         HumanPlayer("You"),
-        RandomGuesser("BotA"),
-        RandomGuesser("BotB"),
+        LLMPlayer("ChatGPT", chatgpt_llm),
+        LLMPlayer("Anthropic", anthropic_llm),
+        RandomGuesser("RandomBot"),
     ]
     game = DifferenzlerGame(players)
-    game.deal_cards()
     game.play_round()
-    game.print_scores()
+
 
 if __name__ == "__main__":
     main()
