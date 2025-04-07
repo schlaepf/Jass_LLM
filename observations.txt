@@ -1,0 +1,41 @@
+Too many guessed points in game:
+
+Human, guess your total points: 120
+ChatGPT guesses 50 points
+Anthropic guesses 53 points
+RandomBot guesses 141 points
+->
+Actual points:
+
+Human:
+  Guessed: 120
+  Actual: 105
+  Difference (score): 15
+  Points: 15
+
+--- ChatGPT's score ---
+
+ChatGPT:
+  Guessed: 50
+  Actual: 12
+  Difference (score): 38
+  Points: 38
+
+--- RandomBot's score ---
+
+RandomBot:
+  Guessed: 141
+  Actual: 28
+  Difference (score): 113
+  Points: 113
+
+--- Anthropic's score ---
+
+Anthropic:
+  Guessed: 53
+  Actual: 3
+  Difference (score): 50
+  Points: 50
+
+---------------------------
+Anthropic often had overloaded_error
