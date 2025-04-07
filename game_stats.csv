@@ -1,6 +1,10 @@
 game_id,round,name_player1,points_player1,name_player2,points_player2,name_player3,points_player3,name_player4,points_player4
-acedf337-49f7-4046-b2e6-52166649fbb6,1,RandomBot,96,ChatGPT,15,Anthropic,7,Human,10
-acedf337-49f7-4046-b2e6-52166649fbb6,2,Human,27,RandomBot,94,Anthropic,7,ChatGPT,20
-acedf337-49f7-4046-b2e6-52166649fbb6,3,ChatGPT,15,Human,0,RandomBot,36,Anthropic,54
-acedf337-49f7-4046-b2e6-52166649fbb6,4,ChatGPT,13,Human,3,RandomBot,12,Anthropic,24
-acedf337-49f7-4046-b2e6-52166649fbb6,5,Anthropic,8,ChatGPT,21,Human,16,RandomBot,72
+4aa0babe-275f-46a4-a0fc-eeea13a5bbfc,1,ChatGPT,6,Anthropic,4,RandomBot,84,Human,4
+770dba71-83c5-4566-8403-94af2156d33c,1,Anthropic,34,Human,0,ChatGPT,32,RandomBot,86
+cf8c28e2-201b-4d75-916b-5bb4eb37482d,1,ChatGPT,20,Human,9,Anthropic,17,RandomBot,79
+40ce6bc3-4ce4-4117-a209-4ee807392d99,1,Anthropic,20,Human,6,ChatGPT,40,RandomBot,10
+f7c17dcb-89d2-4052-b96b-063eef20e622,1,RandomBot,1,Human,6,Anthropic,17,ChatGPT,8
+261ec8c2-4275-4f67-9db9-f29dcf8b90f6,1,Anthropic,37,RandomBot,13,ChatGPT,39,Human,0
+4eb386e8-b41e-494b-b161-64d7865491fb,1,Anthropic,47,Human,4,RandomBot,35,ChatGPT,11
+2fc9b32f-2810-4200-86b7-486c54010c87,1,Human,15,ChatGPT,38,RandomBot,113,Anthropic,50
+46d3cfd0-8846-4136-984c-c8490c12a6ed,1,Anthropic,27,RandomBot,41,Human,2,ChatGPT,25
