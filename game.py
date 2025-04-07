@@ -16,15 +16,18 @@ class DifferenzlerGame:
 
     def get_legal_cards(self, hand, leading_suit):
         # trump can always be played; jack suit is the only card that does not have to follow the leading suit
+        legal_cards = set()
         trump_cards = set([c for c in hand if c.suit == self.trump_suit])
+        legal_cards.update(trump_cards)
         suit_cards = set([c for c in hand if c.suit == leading_suit])
+        legal_cards.update(suit_cards)
         if leading_suit is None or (
-            len(trump_cards) == 1 and list(trump_cards)[0].rank == Rank.JACK and len(suit_cards) == 0
+            len(legal_cards) == 1 and list(legal_cards)[0].rank == Rank.JACK
         ):
             return hand
-        if len(suit_cards) == 0:
+        if len(suit_cards) == 0 or len(legal_cards) == 0:
             return hand
-        legal_cards = list(suit_cards.union(trump_cards))
+        legal_cards = list(legal_cards)
         legal_cards.sort(key=lambda c: (c.suit.value, c.rank.value))
         return legal_cards
 

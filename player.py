@@ -204,6 +204,7 @@ class LLMPlayer(Player):
         Game history: {game_state.history}\n"
         Pick the best card to play and ONLY return the card string. For example "Jack-Schilten" or "Nine-Rosen". Do not return any other text."""
         card = self.llm_func_card_choice(legal_cards, prompt)
+        self.hand.remove(card)
         return card
 
     def __repr__(self):
@@ -238,6 +239,7 @@ def chatgpt_llm_card_choice(legal_cards, prompt):
             or f"{card.rank.name}-{card.suit.name}".upper() == answer
         ):
             return card
+
     print(f"ChatGPT returned illegal card: {answer}")
     return random.choice(legal_cards)
 
