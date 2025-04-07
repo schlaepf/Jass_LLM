@@ -1,4 +1,4 @@
-Too many guessed points in game:
+observations.txt Too many guessed points in game:
 
 Human, guess your total points: 120
 ChatGPT guesses 50 points
@@ -38,4 +38,4 @@ Anthropic:
   Points: 50
 
 ---------------------------
-Anthropic often had overloaded_error
+Anthropic sometimes had overloaded_error

@@ -17,10 +17,16 @@ melted = pd.concat([
 ], ignore_index=True)
 
 wins = melted.loc[melted.groupby('game_id')['points'].idxmin(), 'player'].value_counts()
+max_points = melted.groupby('player')['points'].max()
+min_points = melted.groupby('player')['points'].min()
 
-# Display win counts clearly
+# Display some stats (wins, max, min, ...)
 print("Number of Wins (Lowest Score per Round):")
 print(wins)
+print("\nMax Points per Player:")
+print(max_points)
+print("\nMin Points per Player:")
+print(min_points)
 
 # --- 1. Bar plot with mean & std ---
 stats = melted.groupby('player')['points'].agg(['mean', 'std'])
