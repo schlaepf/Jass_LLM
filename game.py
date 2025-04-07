@@ -1,5 +1,5 @@
 import random
-from card import generate_deck, Suit
+from card import Rank, generate_deck, Suit
 import csv
 import uuid
 
@@ -19,12 +19,14 @@ class DifferenzlerGame:
         trump_cards = set([c for c in hand if c.suit == self.trump_suit])
         suit_cards = set([c for c in hand if c.suit == leading_suit])
         if leading_suit is None or (
-            len(trump_cards) == 1 and list(trump_cards)[0].rank == "JACK"
+            len(trump_cards) == 1 and list(trump_cards)[0].rank == Rank.JACK and len(suit_cards) == 0
         ):
             return hand
         if len(suit_cards) == 0:
             return hand
-        return list(suit_cards.union(trump_cards))
+        legal_cards = list(suit_cards.union(trump_cards))
+        legal_cards.sort(key=lambda c: (c.suit.value, c.rank.value))
+        return legal_cards
 
     def deal_cards(self):
         random.shuffle(self.deck)

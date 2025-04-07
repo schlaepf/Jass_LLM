@@ -132,7 +132,7 @@ class LLMPlayer(Player):
         Leading suit: {game_state.leading_suit.name if game_state.leading_suit else 'None'}\n"
         Hand: {', '.join(card_str(c) for c in self.hand)}\n"
 
-        Now guess how many points you will score this round (a number between 0 and 157). Output the number only.
+        Now guess how many points you will score this round (a number between 0 and 157). Output the number only and do not include any other text.
         """
         self.guess = self.llm_func_point_guess(self.hand, prompt)
         self.guess = int(self.guess)
@@ -202,11 +202,8 @@ class LLMPlayer(Player):
         Legal options: {', '.join(card_str(c) for c in legal_cards)}\n"
         Already played cards: {', '.join(card_str(c) for c in game_state.played_cards)}\n"
         Game history: {game_state.history}\n"
-        Pick the best card to play and ONLY return the card string."""
+        Pick the best card to play and ONLY return the card string. For example "Jack-Schilten" or "Nine-Rosen". Do not return any other text."""
         card = self.llm_func_card_choice(legal_cards, prompt)
-        if card not in legal_cards:
-            raise ValueError(f"{self.name} played illegal card: {card}")
-        self.hand.remove(card)
         return card
 
     def __repr__(self):
@@ -249,7 +246,7 @@ def anthropic_llm_point_guess(legal_cards, prompt):
     client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
     response = client.messages.create(
-        model="claude-3-7-sonnet-20250219",
+        model="claude-3-5-sonnet-latest",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=10,
     )
@@ -267,7 +264,7 @@ def anthropic_llm_card_choice(legal_cards, prompt):
     client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
     response = client.messages.create(
-        model="claude-3-7-sonnet-20250219",
+        model="claude-3-5-sonnet-latest",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=10,
     )
