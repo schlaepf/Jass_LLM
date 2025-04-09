@@ -10,9 +10,12 @@ class DifferenzlerGame:
         self.leading_suit = None
         self.n_rounds = n_rounds
         self.rounds_played = 0
+        self.n_tricks_played = 0
         self.game_id = str(uuid.uuid4())
         self.played_cards = []
         self.history = ""
+        self.N_TRICKS = 9
+        self.MAX_POINTS = 157
 
     def get_legal_cards(self, hand, leading_suit):
         # trump can always be played; jack suit is the only card that does not have to follow the leading suit
@@ -74,6 +77,7 @@ class DifferenzlerGame:
         print("Stats saved to game_stats.csv")
 
     def setup_round(self):
+        self.n_tricks_played = 0
         self.deck = generate_deck()
         self.trump_suit = random.choice(list(Suit))
         self.leading_suit = None
@@ -87,7 +91,7 @@ class DifferenzlerGame:
         # shuffle the players
         random.shuffle(self.players)
         player_order = self.players[:]
-        for _ in range(9):
+        for _ in range(self.N_TRICKS):
             trick = []
             self.leading_suit = None
             for player in player_order:
@@ -98,6 +102,11 @@ class DifferenzlerGame:
                 self.history += f"{player.name} plays {card}\n"
                 trick.append((player, card))
 
+            self.n_tricks_played += 1
+            # the winner of the last trick gets an extra 5 points
+            if self._is_last_trick():
+                self.players[player_order.index(player)].points += 5
+                print(f"{player.name} gets an extra 5 points for the last trick")
             winner = self.determine_trick_winner(trick)
             winner.tricks_won.append([card for _, card in trick])
             self.played_cards.extend(card for _, card in trick)
@@ -125,3 +134,6 @@ class DifferenzlerGame:
             print(f"  Actual: {total_points}")
             print(f"  Difference (score): {diff}")
             print(f"  Points: {player.points}")
+
+    def _is_last_trick(self):
+        return self.n_tricks_played == self.N_TRICKS - 1
