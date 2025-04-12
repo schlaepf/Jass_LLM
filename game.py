@@ -16,6 +16,8 @@ class DifferenzlerGame:
         self.history = ""
         self.N_TRICKS = 9
         self.MAX_POINTS = 157
+        # shuffle the players
+        random.shuffle(self.players)
 
     def get_legal_cards(self, hand, leading_suit):
         # trump can always be played; jack suit is the only card that does not have to follow the leading suit
@@ -88,8 +90,6 @@ class DifferenzlerGame:
         self.deal_cards()
         self.collect_guesses()
 
-        # shuffle the players
-        random.shuffle(self.players)
         player_order = self.players[:]
         for _ in range(self.N_TRICKS):
             trick = []
@@ -115,9 +115,21 @@ class DifferenzlerGame:
             self.history += f"{winner.name} wins the trick: {[c for _, c in trick]}\n\n"
             winner_index = player_order.index(winner)
             player_order = player_order[winner_index:] + player_order[:winner_index]
-
+            print(f"player order: {[p.name for p in player_order]}")
         self.score_players()
         self.history = ""
+
+    def _assert_total_score(self):
+        total_points = 0
+        for player in self.players:
+            total_points += sum(
+                card.point_value(self.trump_suit)
+                for trick in player.tricks_won
+                for card in trick
+            )
+        assert (
+            total_points == self.MAX_POINTS
+        ), f"Total points: {total_points} != {self.MAX_POINTS}"
 
     def score_players(self):
         for player in self.players:
@@ -136,4 +148,4 @@ class DifferenzlerGame:
             print(f"  Points: {player.points}")
 
     def _is_last_trick(self):
-        return self.n_tricks_played == self.N_TRICKS - 1
+        return self.n_tricks_played == self.N_TRICKS
