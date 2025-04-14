@@ -219,7 +219,7 @@ class LLMPlayerGemma(LLMPlayer):
                 },
             ],
         )
-        answer = response["message"]["content"]
+        answer = response["message"]["content"].strip()
 
         if answer.isdigit():
             answer = int(answer)
