@@ -3,6 +3,8 @@ import random
 from openai import OpenAI
 from anthropic import Anthropic
 from prompt import get_prompt_for_points_guess, get_prompt_for_card_choice
+from ollama import chat
+from ollama import ChatResponse
 
 
 class Player:
@@ -89,7 +91,7 @@ class LLMPlayer(Player):
         return "LLMPlayer (llm_func={self.llm_func.__name__})"
 
 
-class LLMPlayerChatGPT(Player):
+class LLMPlayerChatGPT(LLMPlayer):
     def __init__(self, name, openai_model="gpt-4o"):
         super().__init__(name)
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -146,7 +148,7 @@ class LLMPlayerChatGPT(Player):
         return f"LLMPlayerChatGPT {self.model}"
 
 
-class LLMPlayerAnthropic(Player):
+class LLMPlayerAnthropic(LLMPlayer):
     def __init__(self, name, anthropic_model="claude-3-5-sonnet-latest"):
         super().__init__(name)
         self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
@@ -200,3 +202,66 @@ class LLMPlayerAnthropic(Player):
 
     def __repr__(self):
         return f"LLMPlayerAnthropic {self.model}"
+
+
+class LLMPlayerGemma(LLMPlayer):
+    def __init__(self, name, gemma_model="gemma3:27b"):
+        super().__init__(name)
+        self.model = gemma_model
+
+    def _guess(self, prompt):
+        response: ChatResponse = chat(
+            model=self.model,
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
+            ],
+        )
+        answer = response["message"]["content"]
+
+        if answer.isdigit():
+            answer = int(answer)
+            if 0 <= answer <= 157:
+                return answer
+        print(f"Gemma returned illegal guess: {answer}")
+        return random.randint(0, 157)
+
+    def _get_card(self, prompt, legal_cards):
+        response: ChatResponse = chat(
+            model=self.model,
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
+            ],
+        )
+        answer = response["message"]["content"]
+
+        for card in legal_cards:
+            if (
+                str(card).upper() == answer
+                or f"{card.rank.name}-{card.suit.name}".upper() == answer
+            ):
+                return card
+        print(f"Gemma returned illegal card: {answer}")
+        return random.choice(legal_cards)
+
+    def make_guess(self, game_state):
+        prompt = get_prompt_for_points_guess(game_state, self.hand)
+        self.guess = self._guess(prompt)
+        self.guess = int(self.guess)
+        print(f"{self.name} guesses {self.guess} points")
+
+    def play_card(self, game_state):
+        legal_cards = game_state.get_legal_cards(self.hand, game_state.leading_suit)
+
+        prompt = get_prompt_for_card_choice(game_state, legal_cards, self.hand)
+        card = self._get_card(prompt, legal_cards)
+        self.hand.remove(card)
+        return card
+
+    def __repr__(self):
+        return f"LLMPlayerGemma {self.model}"
