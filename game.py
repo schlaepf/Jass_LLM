@@ -44,7 +44,7 @@ class DifferenzlerGame:
     def collect_guesses(self):
         for player in self.players:
             player.make_guess(self)
-            self.history += f"{player.name} guessed {player.guess} points\n"
+            self.history += f"{player} guessed {player.guess} points\n"
 
     def determine_trick_winner(self, trick):
         def strength(entry):
@@ -58,13 +58,13 @@ class DifferenzlerGame:
             self.rounds_played += 1
             print(f"\n--- Round {_ + 1} complete ---")
             for player in self.players:
-                print(f"{player.name}: {player.points} points")
+                print(f"{player}: {player.points} points")
             self.save_stats()
         print(f"\n--- {self.rounds_played} rounds played ---")
 
         print("\n--- Game complete ---")
         for player in self.players:
-            print(f"{player.name}: {player.points} points")
+            print(f"{player}: {player.points} points")
 
     def save_stats(self):
         # store the stats points of the players after a round to a csv file
@@ -73,7 +73,7 @@ class DifferenzlerGame:
             writer = csv.writer(csvfile)
             row = [self.game_id, self.rounds_played]
             for player in self.players:
-                row.append(player.name)
+                row.append(str(player))
                 row.append(player.points)
             writer.writerow(row)
         print("Stats saved to game_stats.csv")
@@ -98,24 +98,24 @@ class DifferenzlerGame:
                 card = player.play_card(self)
                 if not self.leading_suit:
                     self.leading_suit = card.suit
-                print(f"{player.name} plays {card}")
-                self.history += f"{player.name} plays {card}\n"
+                print(f"{player} plays {card}")
+                self.history += f"{player} plays {card}\n"
                 trick.append((player, card))
 
             self.n_tricks_played += 1
             # the winner of the last trick gets an extra 5 points
             if self._is_last_trick():
                 self.players[player_order.index(player)].points += 5
-                print(f"{player.name} gets an extra 5 points for the last trick")
+                print(f"{player} gets an extra 5 points for the last trick")
             winner = self.determine_trick_winner(trick)
             winner.tricks_won.append([card for _, card in trick])
             self.played_cards.extend(card for _, card in trick)
             self.played_cards = list(set(self.played_cards))
-            print(f"{winner.name} wins the trick: {[c for _, c in trick]}\n\n")
-            self.history += f"{winner.name} wins the trick: {[c for _, c in trick]}\n\n"
+            print(f"{winner} wins the trick: {[c for _, c in trick]}\n\n")
+            self.history += f"{winner} wins the trick: {[c for _, c in trick]}\n\n"
             winner_index = player_order.index(winner)
             player_order = player_order[winner_index:] + player_order[:winner_index]
-            print(f"player order: {[p.name for p in player_order]}")
+            print(f"player order: {[p for p in player_order]}")
         self.score_players()
         self.history = ""
 
@@ -140,8 +140,8 @@ class DifferenzlerGame:
             )
             player.update_points(total_points)
             diff = abs(player.guess - total_points)
-            print(f"\n--- {player.name}'s score ---")
-            print(f"\n{player.name}:")
+            print(f"\n--- {player}'s score ---")
+            print(f"\n{player}:")
             print(f"  Guessed: {player.guess}")
             print(f"  Actual: {total_points}")
             print(f"  Difference (score): {diff}")

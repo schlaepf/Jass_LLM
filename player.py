@@ -34,7 +34,7 @@ class Player:
 class RandomGuesser(Player):
     def make_guess(self, game_state):
         self.guess = random.randint(0, 157)
-        print(f"{self.name} guesses {self.guess} points")
+        print(f"{self} guesses {self.guess} points")
 
     def play_card(self, game_state):
         legal = game_state.get_legal_cards(self.hand, game_state.leading_suit)
@@ -68,6 +68,9 @@ class HumanPlayer(Player):
                     return card
             print("Invalid choice. Try again.")
 
+    def __repr__(self):
+        return "HumanPlayer"
+
 
 class LLMPlayer(Player):
     def __init__(self, name):
@@ -77,7 +80,7 @@ class LLMPlayer(Player):
         prompt = get_prompt_for_points_guess(game_state, self.hand)
         self.guess = self.llm_func_point_guess(self.hand, prompt)
         self.guess = int(self.guess)
-        print(f"{self.name} guesses {self.guess} points")
+        print(f"{self} guesses {self.guess} points")
 
     def play_card(self, game_state):
         legal_cards = game_state.get_legal_cards(self.hand, game_state.leading_suit)
@@ -134,7 +137,7 @@ class LLMPlayerChatGPT(LLMPlayer):
         prompt = get_prompt_for_points_guess(game_state, self.hand)
         self.guess = self._guess(prompt)
         self.guess = int(self.guess)
-        print(f"{self.name} guesses {self.guess} points")
+        print(f"{self} guesses {self.guess} points")
 
     def play_card(self, game_state):
         legal_cards = game_state.get_legal_cards(self.hand, game_state.leading_suit)
@@ -145,7 +148,7 @@ class LLMPlayerChatGPT(LLMPlayer):
         return card
 
     def __repr__(self):
-        return f"LLMPlayerChatGPT {self.model}"
+        return f"ChatGPT {self.model}"
 
 
 class LLMPlayerAnthropic(LLMPlayer):
@@ -190,7 +193,7 @@ class LLMPlayerAnthropic(LLMPlayer):
         prompt = get_prompt_for_points_guess(game_state, self.hand)
         self.guess = self._guess(prompt)
         self.guess = int(self.guess)
-        print(f"{self.name} guesses {self.guess} points")
+        print(f"{self} guesses {self.guess} points")
 
     def play_card(self, game_state):
         legal_cards = game_state.get_legal_cards(self.hand, game_state.leading_suit)
@@ -201,7 +204,7 @@ class LLMPlayerAnthropic(LLMPlayer):
         return card
 
     def __repr__(self):
-        return f"LLMPlayerAnthropic {self.model}"
+        return f"Anthropic {self.model}"
 
 
 class LLMPlayerGemma(LLMPlayer):
@@ -253,7 +256,7 @@ class LLMPlayerGemma(LLMPlayer):
         prompt = get_prompt_for_points_guess(game_state, self.hand)
         self.guess = self._guess(prompt)
         self.guess = int(self.guess)
-        print(f"{self.name} guesses {self.guess} points")
+        print(f"{self} guesses {self.guess} points")
 
     def play_card(self, game_state):
         legal_cards = game_state.get_legal_cards(self.hand, game_state.leading_suit)
@@ -264,4 +267,4 @@ class LLMPlayerGemma(LLMPlayer):
         return card
 
     def __repr__(self):
-        return f"LLMPlayerGemma {self.model}"
+        return f"Gemma {self.model}"
