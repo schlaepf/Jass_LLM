@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jass Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Game Header -->
+        <div class="game-header">
+            <h1>Swiss Jass - Differenzler</h1>
+            <div class="game-info">
+                <div class="trump-info">
+                    <span class="trump-label">Trump:</span>
+                    <span id="trump-suit" class="trump-suit">-</span>
+                </div>
+                <div class="round-info">
+                    <span class="round-label">Round:</span>
+                    <span id="current-round" class="current-round">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="game-board">
+            <!-- Player 1 - Left Side -->
+            <div class="opponent opponent-left">
+                <div class="player-info">
+                    <span class="player-name" id="opponent-1-name">ChatGPT-4o-mini</span>
+                    <span class="player-score" id="opponent-1-score">0</span>
+                </div>
+                <div class="player-cards" id="opponent-1-cards">
+                    <!-- Card backs will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Player 2 - Top -->
+            <div class="opponent opponent-top">
+                <div class="player-info">
+                    <span class="player-name" id="opponent-2-name">ChatGPT-4.1</span>
+                    <span class="player-score" id="opponent-2-score">0</span>
+                </div>
+                <div class="player-cards" id="opponent-2-cards">
+                    <!-- Card backs will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Player 3 - Right Side -->
+            <div class="opponent opponent-right">
+                <div class="player-info">
+                    <span class="player-name" id="opponent-3-name">Claude-3.5-Sonnet</span>
+                    <span class="player-score" id="opponent-3-score">0</span>
+                </div>
+                <div class="player-cards" id="opponent-3-cards">
+                    <!-- Card backs will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Current Trick Display -->
+            <div class="trick-area">
+                <!-- Individual card play areas for each player -->
+                <div class="played-card-area played-card-left" id="played-card-left">
+                    <!-- Left player's played card -->
+                </div>
+                <div class="played-card-area played-card-top" id="played-card-top">
+                    <!-- Top player's played card -->
+                </div>
+                <div class="played-card-area played-card-right" id="played-card-right">
+                    <!-- Right player's played card -->
+                </div>
+                <div class="played-card-area played-card-bottom" id="played-card-bottom">
+                    <!-- Human player's played card -->
+                </div>
+                
+                <div class="trick-info">
+                    <div id="trick-number">Trick 1</div>
+                    <div id="trick-winner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Human Player Area -->
+        <div class="human-player">
+            <div class="player-info">
+                <span class="player-name" id="human-name">You</span>
+                <span class="player-score" id="human-score">0</span>
+            </div>
+            
+            <!-- Player's Hand -->
+            <div class="player-hand" id="player-hand">
+                <!-- Cards will be populated here -->
+            </div>
+        </div>
+
+        <!-- Game Actions -->
+        <div class="game-actions">
+            <div class="action-area" id="action-area">
+                <!-- Dynamic action buttons/inputs will appear here -->
+            </div>
+            <div class="game-messages" id="game-messages">
+                <div class="message">Welcome to Swiss Jass! Click "Start Game" to begin.</div>
+            </div>
+        </div>
+
+        <!-- Game Controls -->
+        <div class="game-controls">
+            <button id="start-game-btn" class="btn btn-primary">Start Game</button>
+            <button id="new-game-btn" class="btn btn-secondary" style="display: none;">New Game</button>
+        </div>
+    </div>
+
+    <!-- Player Name Modal -->
+    <div id="player-name-modal" class="modal">
+        <div class="modal-content">
+            <h2>Enter Your Name</h2>
+            <input type="text" id="player-name-input" placeholder="Your name" maxlength="20">
+            <button id="confirm-name-btn" class="btn btn-primary">Start Game</button>
+        </div>
+    </div>
+
+    <!-- Guess Modal -->
+    <div id="guess-modal" class="modal">
+        <div class="modal-content">
+            <h2>Make Your Guess</h2>
+            <p>How many points do you think you'll score this round?</p>
+                    <div class="guess-info">
+            <div class="trump-display">
+                <strong>Trump Suit: <span id="guess-trump-suit"></span></strong>
+            </div>
+            <div class="hand-preview">
+                <strong>Your Hand:</strong>
+                <div id="guess-hand-cards" class="guess-hand-cards">
+                    <!-- Cards will be populated here -->
+                </div>
+            </div>
+        </div>
+            <input type="number" id="guess-input" min="0" max="157" placeholder="0-157">
+            <button id="confirm-guess-btn" class="btn btn-primary">Confirm Guess</button>
+        </div>
+    </div>
+
+    <!-- Round Scoreboard Modal -->
+    <div id="round-scoreboard-modal" class="modal">
+        <div class="modal-content">
+            <h2>Round <span id="scoreboard-round-number"></span> Complete</h2>
+            
+            <div class="scoreboard-section">
+                <h3>Round Results</h3>
+                <div id="round-results-table" class="results-table">
+                    <!-- Round results will be populated here -->
+                </div>
+            </div>
+            
+            <div class="scoreboard-section">
+                <h3>Total Scores</h3>
+                <div id="total-scores-table" class="results-table">
+                    <!-- Total scores will be populated here -->
+                </div>
+            </div>
+            
+            <button id="close-scoreboard-btn" class="btn btn-primary">Continue</button>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal">
+        <div class="modal-content">
+            <h2>Game Over!</h2>
+            <div id="final-results">
+                <!-- Final scores will be displayed here -->
+            </div>
+            <button id="new-game-after-finish-btn" class="btn btn-primary">Play Again</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html> 

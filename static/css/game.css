@@ -1,0 +1,679 @@
+/* Game CSS Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ecf0f1;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Game Header */
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.game-header h1 {
+    font-size: 2.5em;
+    color: #f1c40f;
+    margin-bottom: 10px;
+}
+
+.game-info {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 15px;
+}
+
+.trump-info, .round-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trump-label, .round-label {
+    font-size: 0.9em;
+    color: #bdc3c7;
+    margin-bottom: 5px;
+}
+
+.trump-suit, .current-round {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #f39c12;
+}
+
+/* Game Board */
+.game-board {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: 150px 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+    min-height: 400px;
+    position: relative;
+}
+
+/* Player Positioning */
+.opponent-left {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.opponent-top {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    gap: 15px;
+}
+
+.opponent-right {
+    grid-column: 3;
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.opponent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* Active player highlighting */
+.opponent.active-player,
+.human-player.active-player {
+    border: 3px solid #27ae60;
+    box-shadow: 0 0 15px rgba(39, 174, 96, 0.5);
+    transform: scale(1.02);
+}
+
+.opponent.active-player {
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.human-player.active-player {
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.player-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ecf0f1;
+}
+
+.player-score {
+    color: #f39c12;
+    font-size: 1.2em;
+}
+
+.player-guess {
+    color: #3498db;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+.card-back {
+    width: 40px;
+    height: 55px;
+    background: url('/static/cards/card_back.svg') no-repeat center center;
+    background-size: contain;
+    margin: 2px;
+}
+
+.player-cards {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Multiple card backs to show hand size */
+.opponent-left .player-cards,
+.opponent-right .player-cards {
+    flex-direction: column;
+    align-items: center;
+    max-width: 50px;
+}
+
+.opponent-top .player-cards {
+    flex-direction: row;
+}
+
+/* Trick Area */
+.trick-area {
+    grid-column: 2;
+    grid-row: 2;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 200px;
+}
+
+/* Individual card play areas positioned around the center */
+.played-card-area {
+    position: absolute;
+    width: 80px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.played-card-area:not(:empty) {
+    border-color: rgba(241, 196, 15, 0.5);
+    background: rgba(241, 196, 15, 0.1);
+}
+
+.played-card-left {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.played-card-top {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.played-card-right {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.played-card-bottom {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.trick-card {
+    width: 80px;
+    height: 110px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    animation: cardPlay 0.5s ease-out;
+}
+
+@keyframes cardPlay {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.trick-info {
+    text-align: center;
+    color: #ecf0f1;
+}
+
+#trick-number {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#trick-winner {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+/* Human Player */
+.human-player {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.player-hand {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.card {
+    width: 80px;
+    height: 110px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #f39c12;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.card.legal {
+    border-color: #27ae60;
+}
+
+.card.illegal {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.card.selected {
+    transform: translateY(-15px);
+    border-color: #e74c3c;
+    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.4);
+}
+
+/* Game Actions */
+.game-actions {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.action-area {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.game-messages {
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    border-left: 3px solid #3498db;
+}
+
+/* Game Controls */
+.game-controls {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+    transform: translateY(-2px);
+}
+
+.btn-large {
+    padding: 16px 32px;
+    font-size: 18px;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: #34495e;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    color: #ecf0f1;
+}
+
+.modal-content h2 {
+    color: #f39c12;
+    margin-bottom: 20px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+.guess-info {
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    text-align: left;
+}
+
+.guess-info div {
+    margin: 10px 0;
+}
+
+.trump-display {
+    text-align: center;
+    font-size: 1.1em;
+    color: #f39c12;
+    margin-bottom: 15px;
+}
+
+.hand-preview {
+    text-align: center;
+}
+
+.guess-hand-cards {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.guess-hand-cards .card {
+    width: 50px;
+    height: 70px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 5px;
+    border: 1px solid #bdc3c7;
+    cursor: default;
+    transition: transform 0.2s ease;
+}
+
+.guess-hand-cards .card:hover {
+    transform: scale(1.1);
+}
+
+/* Final Results */
+#final-results {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.winner {
+    background: rgba(46, 204, 113, 0.3);
+    border: 1px solid #27ae60;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-board {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        gap: 10px;
+    }
+    
+    .opponent-left,
+    .opponent-top,
+    .opponent-right {
+        grid-column: 1;
+        grid-row: auto;
+        flex-direction: row;
+        justify-content: center;
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .opponent-left.active-player,
+    .opponent-top.active-player,
+    .opponent-right.active-player {
+        transform: scale(1.01); /* Smaller scale for mobile */
+    }
+    
+    .trick-area {
+        grid-column: 1;
+        grid-row: auto;
+        min-height: 150px;
+        padding: 15px;
+    }
+    
+    /* Adjust card positions for mobile */
+    .played-card-area {
+        width: 60px;
+        height: 82px;
+    }
+    
+    .played-card-left, .played-card-right {
+        top: 40%;
+    }
+    
+    .played-card-top {
+        top: 10px;
+    }
+    
+    .played-card-bottom {
+        bottom: 10px;
+    }
+    
+    .player-hand {
+        gap: 5px;
+    }
+    
+    .card {
+        width: 60px;
+        height: 82px;
+    }
+    
+    .trick-card {
+        width: 60px;
+        height: 82px;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes slideInFromTop {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.slide-in-top {
+    animation: slideInFromTop 0.5s ease-out;
+}
+
+/* Card highlight effects */
+.card-highlight {
+    box-shadow: 0 0 20px rgba(241, 196, 15, 0.8);
+    transform: scale(1.05);
+}
+
+/* Loading spinner */
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Scoreboard Modal Styles */
+.scoreboard-section {
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.scoreboard-section h3 {
+    color: #f39c12;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.results-table {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-size: 0.95em;
+}
+
+.result-row.human-player {
+    background: rgba(52, 152, 219, 0.3);
+    border: 1px solid #3498db;
+}
+
+.result-row .player-name {
+    font-weight: bold;
+    flex: 1;
+    text-align: left;
+}
+
+.result-row .player-stats {
+    display: flex;
+    gap: 15px;
+    font-family: 'Courier New', monospace;
+}
+
+#round-scoreboard-modal .modal-content {
+    max-width: 600px;
+    width: 90%;
+} 

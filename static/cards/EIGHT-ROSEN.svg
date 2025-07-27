@@ -1,0 +1,20 @@
+<svg width="120" height="160" viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+    <!-- Card background -->
+    <rect x="4" y="4" width="112" height="152" rx="12" ry="12" fill="white" stroke="#333" stroke-width="2"/>
+    
+    <!-- Rank in top-left -->
+    <text x="15" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#DC143C">8</text>
+    
+    <!-- Suit symbols -->
+    <g fill="#DC143C">
+        <text x="60" y="80" text-anchor="middle" font-size="32">🌹</text>
+    </g>
+    
+    <!-- Rank in bottom-right (upside down) -->
+    <g transform="rotate(180 60 80)">
+        <text x="15" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#DC143C">8</text>
+    </g>
+    
+    <!-- Card name for debugging -->
+    <text x="60" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">EIGHT-ROSEN</text>
+</svg>

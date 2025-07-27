@@ -1,0 +1,20 @@
+<svg width="120" height="160" viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+    <!-- Card background -->
+    <rect x="4" y="4" width="112" height="152" rx="12" ry="12" fill="#8B0000" stroke="#333" stroke-width="2"/>
+    
+    <!-- Pattern -->
+    <defs>
+        <pattern id="cardPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="#8B0000"/>
+            <circle cx="10" cy="10" r="3" fill="#FFD700"/>
+        </pattern>
+    </defs>
+    
+    <rect x="8" y="8" width="104" height="144" rx="8" ry="8" fill="url(#cardPattern)"/>
+    
+    <!-- Border decoration -->
+    <rect x="12" y="12" width="96" height="136" rx="6" ry="6" fill="none" stroke="#FFD700" stroke-width="2"/>
+    
+    <!-- Center logo -->
+    <text x="60" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFD700">JASS</text>
+</svg>

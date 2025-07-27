@@ -1,26 +1,5 @@
-game_id,round,name_player1,points_player1,name_player2,points_player2,name_player3,points_player3,name_player4,points_player4
-4aa0babe-275f-46a4-a0fc-eeea13a5bbfc,1,ChatGPT,6,Anthropic,4,RandomBot,84,Human,4
-770dba71-83c5-4566-8403-94af2156d33c,1,Anthropic,34,Human,0,ChatGPT,32,RandomBot,86
-cf8c28e2-201b-4d75-916b-5bb4eb37482d,1,ChatGPT,20,Human,9,Anthropic,17,RandomBot,79
-40ce6bc3-4ce4-4117-a209-4ee807392d99,1,Anthropic,20,Human,6,ChatGPT,40,RandomBot,10
-f7c17dcb-89d2-4052-b96b-063eef20e622,1,RandomBot,1,Human,6,Anthropic,17,ChatGPT,8
-261ec8c2-4275-4f67-9db9-f29dcf8b90f6,1,Anthropic,37,RandomBot,13,ChatGPT,39,Human,0
-4eb386e8-b41e-494b-b161-64d7865491fb,1,Anthropic,47,Human,4,RandomBot,35,ChatGPT,11
-2fc9b32f-2810-4200-86b7-486c54010c87,1,Human,15,ChatGPT,38,RandomBot,113,Anthropic,50
-46d3cfd0-8846-4136-984c-c8490c12a6ed,1,Anthropic,27,RandomBot,41,Human,2,ChatGPT,25
-9ecb07ac-14ca-496a-a044-30d348d67200,1,RandomBot,109,ChatGPT,1,Anthropic,98,Human,0
-35805973-2689-4113-9574-d3bb4a3a63be,1,ChatGPT,12,Anthropic,23,RandomBot,53,Human,9
-5098800e-5686-47f7-8c33-ef5729fae34e,1,Anthropic,16,RandomBot,6,Human,4,ChatGPT,15
-cf45ffaa-dd11-4b90-b365-2c5b8e7be5a9,1,ChatGPT,34,Human,7,RandomBot,91,Anthropic,32
-a069ae2f-edab-4004-b675-f68209c590e2,1,Anthropic,54,RandomBot,73,Human,12,ChatGPT,44
-8c4057bd-0d51-4050-a4fb-c38dbb6022bf,1,Anthropic,2,Human,6,RandomBot,79,ChatGPT,10
-d9c897dd-a890-4004-a366-4915081de127,1,RandomBot,111,ChatGPT,17,Anthropic,13,Human,22
-26f0055b-3043-4c19-bbf0-196d8d641ed2,1,ChatGPT,13,Anthropic,17,Human,1,RandomBot,79
-d495deeb-ae39-496f-8113-ea41ae91d6a7,1,RandomBot,28,Anthropic,24,ChatGPT,47,Human,10
-0151882c-3395-42e8-86ac-fd498f64ea9f,1,RandomBot,0,Human,7,ChatGPT,20,Anthropic,30
-6ecd1f20-0f97-423a-8825-342ddfda02b6,1,Human,12,Anthropic,19,RandomBot,47,ChatGPT,24
-9fe3bfe6-ea15-428a-9a24-8dfaf006da56,1,ChatGPT,15,Anthropic,9,RandomBot,93,Human,24
-4d33030f-5d11-496d-a9ec-0e7f64a5cc68,1,RandomBot,80,Human,8,ChatGPT,24,Anthropic,4
-c3d3368a-c3fc-4121-b7ff-29cf120f542a,1,RandomBot,83,ChatGPT,36,Anthropic,10,Human,17
-cb51ea40-472d-42e6-9122-784e5af8f07b,1,Human,0,RandomBot,128,Anthropic,14,ChatGPT,1
-ed480f78-a080-4e60-b6ca-81cbbfd3fdee,1,RandomBot,93,Human,30,ChatGPT,8,Anthropic,33
+d91073e4-b0cd-4acf-b6dc-350e4df21007,1,ChatGPT,23,Anthropic,13,ChatGPT,29,ChatGPT,20
+72527e00-0f76-4315-8d46-e6cfa37fedca,1,ChatGPT o4-mini-2025-04-16,30,ChatGPT gpt-4.1-2025-04-14,10,Anthropic claude-3-7-sonnet-20250219,42,ChatGPT gpt-4o-2024-05-13,40
+4055c680-16be-4f87-b3cf-088364341ec4,1,ChatGPT gpt-4o-2024-05-13,97,ChatGPT gpt-4.1-2025-04-14,18,Anthropic claude-3-7-sonnet-20250219,71,ChatGPT o4-mini-2025-04-16,55
+542a3eea-f55c-4008-8a28-b5bcb988d50d,1,ChatGPT gpt-4o-2024-05-13,143,ChatGPT gpt-4.1-2025-04-14,30,Anthropic claude-3-7-sonnet-20250219,95,ChatGPT o4-mini-2025-04-16,133
+1c5d3088-3f81-48b6-b28b-d6f19f444797,1,ChatGPT gpt-4.1-2025-04-14,45,Anthropic claude-3-7-sonnet-20250219,105,ChatGPT o4-mini-2025-04-16,145,ChatGPT gpt-4o-2024-05-13,157
