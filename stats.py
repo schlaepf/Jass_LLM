@@ -1,9 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+
+# Ensure plots directory exists
+os.makedirs("plots", exist_ok=True)
 
 
-df = pd.read_csv("game_stats.csv")
+df = pd.read_csv("game_stats.csv", header=None, names=[
+    "game_id", "round", "name_player1", "points_player1", 
+    "name_player2", "points_player2", "name_player3", "points_player3", 
+    "name_player4", "points_player4"
+])
 
 melted = pd.concat(
     [
@@ -50,16 +58,16 @@ plt.title("Average Scores with Standard Deviation")
 plt.xlabel("Player")
 plt.ylabel("Points")
 plt.tight_layout()
-plt.savefig("average_scores.png")
+plt.savefig("plots/average_scores.png")
 
 # --- 2. Box plot of score distributions ---
 plt.figure(figsize=(8, 6))
-ax = sns.boxplot(data=melted, x="player", y="points", palette="Set2")
+ax = sns.boxplot(data=melted, x="player", y="points", hue="player", palette="Set2", legend=False)
 plt.title("Score Distribution per Player", fontsize=14, fontweight="bold")
 plt.xlabel("Player", fontsize=12)
 plt.ylabel("Points", fontsize=12)
 plt.tight_layout()
-plt.savefig("score_distribution.png")
+plt.savefig("plots/score_distribution.png")
 
 # --- 3. Violin plot
 plt.figure(figsize=(8, 5))
@@ -68,10 +76,11 @@ plt.title("Score Distributions per Player (Violin Plot)")
 plt.ylabel("Points")
 plt.xlabel("Player")
 plt.tight_layout()
-plt.savefig("score_distribution_violin.png")
+plt.savefig("plots/score_distribution_violin.png")
 
 # --- 4. Heatmap of scores by game and player ---
-heatmap_data = melted.pivot(index="game_id", columns="player", values="points")
+# Aggregate by mean in case there are duplicate game_id/player combinations
+heatmap_data = melted.groupby(["game_id", "player"])["points"].mean().unstack()
 
 plt.figure(figsize=(8, 6))
 sns.heatmap(heatmap_data, annot=True, cmap="YlGnBu")
@@ -79,7 +88,7 @@ plt.title("Heatmap of Scores by Game and Player")
 plt.xlabel("Player")
 plt.ylabel("Game ID")
 plt.tight_layout()
-plt.savefig("heatmap_scores.png")
+plt.savefig("plots/heatmap_scores.png")
 
 # --- 5. Scatter plot of mean vs std ---
 plt.figure(figsize=(8, 6))
@@ -100,4 +109,4 @@ plt.title("Player Consistency (Mean vs Std)")
 plt.xlabel("Mean Score")
 plt.ylabel("Standard Deviation")
 plt.tight_layout()
-plt.savefig("mean_std_scatter.png")
+plt.savefig("plots/mean_std_scatter.png")
